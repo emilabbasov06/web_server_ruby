@@ -80,15 +80,6 @@ module Utils
 
       "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n#{html}"
     end
-
-
-    def self.serve_static(file_name)
-      content = File.read("tmp/www/#{file_name}")
-      "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n#{content}"
-    end
-
-    def self.not_found
-      "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n<h1>404 - Not Found</h1>"
-    end
+    
   end
 end
