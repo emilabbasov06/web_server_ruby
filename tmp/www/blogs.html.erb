@@ -14,8 +14,8 @@
     <div class="blogs">
       <% @blogs.each do |blog| %>
         <div class="blog">
-          <h3><%= blog["title"] %></h3>
-          <p><%= blog["content"] %></p>
+          <h3><%= blog[:title] %></h3>
+          <p><%= blog[:title] %></p>
         </div>
       <% end %>
     </div>

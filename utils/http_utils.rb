@@ -72,8 +72,8 @@ module Utils
 
 
     def self.render_erb(file_name, blogs)
-      # @blogs = blogs.map { |row| row.transform_keys(&:to_sym) }
-      @blogs = blogs
+      @blogs = blogs.map { |row| row.transform_keys(&:to_sym) } # => in here you can call data in html file using @blogs[:title]
+      # @blogs = blogs => in this one you can call values using @blogs["title"]
 
       erb_path = File.expand_path("../tmp/www/#{file_name}", __dir__)
       template = ERB.new(File.read(erb_path))
