@@ -8,3 +8,9 @@ def get_blogs
   server_db = Database.new(path)
   server_db.select_all("blogs")
 end
+
+def get_blog(id)
+  path = File.expand_path("../database/server.db", __dir__)
+  server_db = Database.new(path)
+  server_db.select_row_with_id("blogs", id)
+end
