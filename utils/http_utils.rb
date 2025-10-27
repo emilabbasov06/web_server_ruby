@@ -72,7 +72,8 @@ module Utils
 
 
     def self.render_erb(file_name, blogs)
-      @blogs = blogs.map { |row| row.transform_keys(&:to_sym) }
+      # @blogs = blogs.map { |row| row.transform_keys(&:to_sym) }
+      @blogs = blogs
 
       erb_path = File.expand_path("../tmp/www/#{file_name}", __dir__)
       template = ERB.new(File.read(erb_path))
@@ -80,6 +81,6 @@ module Utils
 
       "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n#{html}"
     end
-    
+
   end
 end
