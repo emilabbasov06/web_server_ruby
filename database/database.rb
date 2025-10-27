@@ -1,8 +1,8 @@
-# In this file we will connect to database (SQLite3) and add some blog posts
-# After that we will send those post to (/blogs) to render them on HTML file
-
-
 require "sqlite3"
+require "json"
+require_relative "../utils/normal_text"
+require_relative "../utils/database_utils"
+
 
 class Database
   attr_reader :db_name
@@ -11,10 +11,60 @@ class Database
     @db_name = db_name
   end
 
-  def create_table(query)
+  def select_all(table_name)
     db = get_db
-    db.execute(query)
-    db.close
+    db.results_as_hash = true
+    rows = Utils::DatabaseUtils.run(db, "SELECT * FROM #{table_name};")
+    
+    JSON.parse(JSON.pretty_generate(rows))
+  end
+
+  def select_row_with_id(table_name, id)
+    db = get_db
+    db.results_as_hash = true
+    row = Utils::DatabaseUtils.run(db, "SELECT * FROM #{table_name} WHERE id = #{id};")
+
+    JSON.parse(JSON.pretty_generate(row)).first
+  end
+
+  def create_table(table_name, table_schema)
+    query = "CREATE TABLE IF NOT EXISTS #{table_name}("
+    table_schema.each do |column_name, column_type|
+      query += "#{column_name} #{column_type[:type]} #{column_type[:primary_key] == true ? "PRIMARY KEY" : ""}, "
+    end
+    query += ");"
+    query = Utils::NormalText.remove_last(query, ", ", "")
+
+    db = get_db()
+    Utils::DatabaseUtils.run(db, query)
+  end
+
+  def drop_table(table_name)
+    db = get_db()
+    Utils::DatabaseUtils.run(db, "DROP TABLE #{table_name;}")
+  end
+
+  def insert(table_name, values)
+    query = "INSERT INTO #{table_name}("
+    values.each do |column, value|
+      query += "#{column}, "
+    end
+    query += ") VALUES("
+    query = Utils::NormalText.remove_last(query, ", ", "")
+
+    values.each do |column, value|
+      query += "\"#{value}\", "
+    end
+    query += ");"
+    query = Utils::NormalText.remove_last(query, ", ", "")
+
+    db = get_db
+    Utils::DatabaseUtils.run(db, query)
+  end
+
+  def drop_row_with_id(table_name, id)
+    db = get_db
+    Utils::DatabaseUtils.run(db, "DELETE FROM #{table_name} WHERE id = #{id};")
   end
 
   private
@@ -29,6 +79,5 @@ class Database
   end
 end
 
-new_db = Database.new("./server.db")
-new_db.create_table("CREATE TABLE IF NOT EXISTS Cars(Id INTEGER PRIMARY KEY, 
-        Name TEXT, Price INT)")
+server_db = Database.new("./server.db")
+p server_db.select_all("blogs")
