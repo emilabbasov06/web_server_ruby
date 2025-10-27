@@ -63,3 +63,37 @@ a:active {
 a:visited {
   color: #5a8ec2;
 }
+
+
+.blogs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 !important;
+  box-shadow: none;
+}
+
+.blog {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.blog h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.blog p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}

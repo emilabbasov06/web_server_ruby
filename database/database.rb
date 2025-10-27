@@ -71,13 +71,11 @@ class Database
   
   def get_db
     begin
-      db = SQLite3::Database.open(@db_name)
+      db_path = File.expand_path(@db_name, __dir__)
+      db = SQLite3::Database.open(db_path)
       return db
     rescue SQLite3::Exception => e
       puts "[ERROR]: #{e.message}"
     end
   end
 end
-
-server_db = Database.new("./server.db")
-p server_db.select_all("blogs")
