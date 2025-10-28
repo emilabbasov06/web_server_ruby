@@ -22,7 +22,6 @@ div {
   padding: 40px 60px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
   max-width: 600px;
 }
 
@@ -96,4 +95,87 @@ a:visited {
   font-size: 1rem;
   color: #555;
   line-height: 1.5;
+}
+
+
+.blog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.blog-form input[type="text"],
+.blog-form textarea {
+  width: 100%;
+  max-width: 450px;
+  padding: 12px 15px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.blog-form input[type="text"]:focus,
+.blog-form textarea:focus {
+  border-color: #74ebd5;
+  outline: none;
+  box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+}
+
+.blog-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.blog-form button {
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.blog-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+.blog-form button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.home-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .new_blog_btn {
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .new_blog_btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+  }
+
+  .new_blog_btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
 }

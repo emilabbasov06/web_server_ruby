@@ -37,6 +37,7 @@ end
 # Adding some routes
 Utils::RouterUtils.create_route("/", "index.html")
 Utils::RouterUtils.create_route("/blogs", "blogs.html")
+Utils::RouterUtils.create_route("/new", "new_blog.html")
 
 
 http = HttpServer.new("localhost", 3000)
@@ -46,7 +47,11 @@ puts "[INFO]: Server running on http://localhost:3000 (http://127.0.0.1:3000)"
 begin
   loop do
     HttpServer.client(socket)
+  rescue => e
+    puts "[ERROR]: #{e.class} - #{e.message}"
   end
 rescue Interrupt
   puts "\n[INFO]: Server stopped"
+  socket.close if socket
+  exit
 end

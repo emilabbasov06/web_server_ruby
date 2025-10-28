@@ -1,3 +1,4 @@
+require "uri"
 require_relative "../views/views"
 
 
@@ -6,11 +7,19 @@ module Utils
     def self.parse(request)
       method, path, version = request.lines[0].split
 
+      header_section, body = request.split("\r\n\r\n", 2)
+
+      params = {}
+      if method == "POST" && body && !body.strip.empty?
+        params = parse_params(body)
+      end
+
       {
         path: path,
         method: method,
         version: version,
-        headers: self.parse_headers(request)
+        headers: self.parse_headers(request),
+        params: params
       }
     end
 
@@ -29,12 +38,21 @@ module Utils
       headers
     end
 
+    def self.parse_params(body)
+      URI.decode_www_form(body).to_h
+    end
+
     def self.normalize(header)
       header.gsub(":", "").downcase.to_sym
     end
 
     def self.controller(data)
       path = data[:path]
+
+      if path == "/" && data[:method] == "POST"
+        params = data[:params]
+        new_blog(params)
+      end
 
       if path == "/blogs"
         return render_erb("blogs.html.erb", get_blogs)
