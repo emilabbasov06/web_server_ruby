@@ -14,8 +14,17 @@
     <div class="blogs">
       <% @blogs.each do |blog| %>
         <div class="blog">
-          <h3><%= blog[:title] %></h3>
-          <p><%= blog[:title] %></p>
+          <div>
+            <h3><%= blog[:title] %></h3>
+            <p><%= blog[:content] %></p>
+          </div>
+          <div class="delete_blog">
+            <form action="/" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="id" value="<%= blog[:id] %>">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
         </div>
       <% end %>
     </div>

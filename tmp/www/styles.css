@@ -69,7 +69,6 @@ a:visited {
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
   padding: 0 !important;
   box-shadow: none;
@@ -82,8 +81,46 @@ a:visited {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   text-align: left;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
+
+  div {
+    padding: 0;
+    background: none !important;
+  }
+
+  div:first-child {
+    width: 100% !important;
+    padding: 1rem;
+    border: none;
+    box-shadow: none;
+  }
+
+  div:nth-child(2){
+    width: fit-content;
+
+    button {
+      background: linear-gradient(135deg, #ff4e50, #f9d423); /* red gradient */
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+  }
 }
 
 .blog h3 {

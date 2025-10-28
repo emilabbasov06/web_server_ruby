@@ -48,10 +48,14 @@ module Utils
 
     def self.controller(data)
       path = data[:path]
+      params = data[:params]
 
       if path == "/" && data[:method] == "POST"
-        params = data[:params]
-        new_blog(params)
+        if params["_method"] == "DELETE"
+          delete_blog(params["id"])
+        else
+          new_blog(params)
+        end
       end
 
       if path == "/blogs"

@@ -17,6 +17,12 @@ end
 
 def new_blog(params)
   server_db = Database.new($path)
-  server_db.insert("blogs", params)
-  puts "New blog added"
+  server_db.insert("blogs", {title: params["title"], content: params["content"]})
+  puts "[INFO]: New blog added to database"
+end
+
+def delete_blog(id)
+  server_db = Database.new($path)
+  server_db.drop_row_with_id("blogs", id)
+  puts "[INFO]: Blog has been removed from database"
 end
