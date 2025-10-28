@@ -100,7 +100,7 @@ a:visited {
     width: fit-content;
 
     button {
-      background: linear-gradient(135deg, #ff4e50, #f9d423); /* red gradient */
+      background: linear-gradient(135deg, #f3070b, #f54444, #e98787); /* red gradient */
       border: none;
       color: #fff;
       font-size: 1.1rem;
