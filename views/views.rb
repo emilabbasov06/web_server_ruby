@@ -12,7 +12,7 @@ end
 
 def get_blog(id)
   server_db = Database.new($path)
-  server_db.select_row_with_id("blogs", id)
+  server_db.select_row_with_id("blogs", (id unless id.nil?))
 end
 
 def new_blog(params)

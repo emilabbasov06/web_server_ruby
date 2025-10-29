@@ -42,6 +42,12 @@ module Utils
       URI.decode_www_form(body).to_h
     end
 
+    def self.extract_id_from_path(path)
+      last_segment = path.split("/").last
+      return nil unless last_segment =~ /^\d+$/
+      last_segment.to_i
+    end
+
     def self.normalize(header)
       header.gsub(":", "").downcase.to_sym
     end
@@ -61,6 +67,15 @@ module Utils
       if path == "/blogs"
         return render_erb("blogs.html.erb", get_blogs)
       end
+
+      if path =~ %r{^/blogs/(\d+)$}
+        id = extract_id_from_path(path)
+        if !id.nil?
+          blog = get_blog(id)
+          return render_erb_single_blog("single_blog.html.erb", blog)
+        end
+      end
+
 
       view_file = RouterUtils.resolve(path)
       file_path = view_file ? File.join("tmp/www", view_file) : File.join("tmp/www", path[1..-1])
@@ -97,6 +112,15 @@ module Utils
       @blogs = blogs.map { |row| row.transform_keys(&:to_sym) } # => in here you can call data in html file using @blogs[:title]
       # @blogs = blogs => in this one you can call values using @blogs["title"]
 
+      erb_path = File.expand_path("../tmp/www/#{file_name}", __dir__)
+      template = ERB.new(File.read(erb_path))
+      html = template.result(binding)
+
+      "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n#{html}"
+    end
+
+    def self.render_erb_single_blog(file_name, blog)
+      @blog = blog
       erb_path = File.expand_path("../tmp/www/#{file_name}", __dir__)
       template = ERB.new(File.read(erb_path))
       html = template.result(binding)

@@ -38,6 +38,7 @@ end
 Utils::RouterUtils.create_route("/", "index.html")
 Utils::RouterUtils.create_route("/blogs", "blogs.html")
 Utils::RouterUtils.create_route("/new", "new_blog.html")
+Utils::RouterUtils.create_route(%r{^/blogs/(\d+)$}, "single_blog.html.erb")
 
 
 http = HttpServer.new("localhost", 3000)
