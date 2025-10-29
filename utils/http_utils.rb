@@ -1,5 +1,4 @@
 require "uri"
-require_relative "../views/views"
 
 
 module Utils
@@ -51,62 +50,6 @@ module Utils
     def self.normalize(header)
       header.gsub(":", "").downcase.to_sym
     end
-
-    def self.controller(data)
-      path = data[:path]
-      params = data[:params]
-
-      if path == "/" && data[:method] == "POST"
-        if params["_method"] == "DELETE"
-          delete_blog(params["id"])
-        else
-          new_blog(params)
-        end
-      end
-
-      if path == "/blogs"
-        return render_erb("blogs.html.erb", get_blogs)
-      end
-
-      if path =~ %r{^/blogs/(\d+)$}
-        id = extract_id_from_path(path)
-        if !id.nil?
-          blog = get_blog(id)
-          return render_erb("single_blog.html.erb", blog)
-        end
-      end
-
-
-      view_file = RouterUtils.resolve(path)
-      file_path = view_file ? File.join("tmp/www", view_file) : File.join("tmp/www", path[1..-1])
-
-      unless File.exist?(file_path)
-        file_path = File.join("tmp/www", "404.html")
-        status_line = "#{data[:version]} 404 Not Found\r\n"
-      else
-        status_line = "#{data[:version]} 200 OK\r\n"
-      end
-
-      content = File.read(file_path)
-
-      content_type =
-        if file_path.end_with?(".html")
-          "text/html"
-        elsif file_path.end_with?(".css")
-          "text/css"
-        elsif file_path.end_with?(".js")
-          "application/javascript"
-        else
-          "text/plain"
-        end
-
-      headers = "Content-Type: #{content_type}\r\n" \
-                "Content-Length: #{content.bytesize}\r\n" \
-                "Connection: close\r\n\r\n"
-
-      status_line + headers + content
-    end
-
 
     def self.render_erb(file_name, data)
       @data = data

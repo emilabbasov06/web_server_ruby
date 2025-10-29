@@ -1,6 +1,7 @@
 require "socket"
 require_relative "config/router"
 require_relative "utils/http_utils"
+require_relative "utils/controller_utils"
 
 
 class HttpServer
@@ -9,7 +10,7 @@ class HttpServer
     def client(socket)
       client = socket.accept
       request = client.readpartial(2048)
-      response = Utils::HttpUtils.controller(Utils::HttpUtils.parse(request))
+      response = Utils::ControllerUtils.controller(Utils::HttpUtils.parse(request))
       
 
       client.write(response)
