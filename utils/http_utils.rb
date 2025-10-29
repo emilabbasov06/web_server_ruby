@@ -6,11 +6,11 @@ module Utils
     def self.parse(request)
       method, path, version = request.lines[0].split
 
-      header_section, body = request.split("\r\n\r\n", 2)
+      _, body = request.split("\r\n\r\n", 2)
 
       params = {}
       if method == "POST" && body && !body.strip.empty?
-        params = parse_params(body)
+        params = URI.decode_www_form(body).to_h
       end
 
       {
@@ -35,10 +35,6 @@ module Utils
       end
 
       headers
-    end
-
-    def self.parse_params(body)
-      URI.decode_www_form(body).to_h
     end
 
     def self.extract_id_from_path(path)
