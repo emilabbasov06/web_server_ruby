@@ -12,16 +12,16 @@
     <p>You can read my blogs in this page.</p>
 
     <div class="blogs">
-      <% @blogs.each do |blog| %>
+      <% @data.each do |blog| %>
         <div class="blog">
           <div>
-            <h3><a href="/blogs/<%= blog[:id] %>"><%= blog[:title] %></a></h3>
-            <p><%= blog[:content] %></p>
+            <h3><a href="/blogs/<%= blog["id"] %>"><%= blog["title"] %></a></h3>
+            <p><%= blog["content"] %></p>
           </div>
           <div class="delete_blog">
             <form action="/" method="POST">
               <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="id" value="<%= blog[:id] %>">
+              <input type="hidden" name="id" value="<%= blog["id"] %>">
               <button type="submit">Delete</button>
             </form>
           </div>
